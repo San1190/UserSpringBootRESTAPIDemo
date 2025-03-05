@@ -1,10 +1,10 @@
-package SolidarityHub;
+package SolidarityHub.Models;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "usuarios")
-public class Usuario {
+@Table(name = "voluntarios")
+public class Voluntario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,20 +13,20 @@ public class Usuario {
     private String nombre;
     private String email;
     private String contrasena;
+    private String telefono; // Añade un campo teléfono
+    //Getters y Setters
+    private String areaInteres; // Area de interes del voluntario
 
-    @Lob  // Esto indica que el campo será un tipo "Large Object" para almacenar la imagen como un arreglo de bytes
-    private byte[] foto;  // El campo foto será un arreglo de bytes
+    public Voluntario() {}
 
-    public Usuario() {}
-
-    public Usuario(String nombre, String email, String contrasena, byte[] foto) {
+    public Voluntario(String nombre, String email, String contrasena, String telefono, String areaInteres) {
         this.nombre = nombre;
         this.email = email;
         this.contrasena = contrasena;
-        this.foto = foto;
+        this.telefono = telefono;
+        this.areaInteres = areaInteres;
     }
 
-    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -39,6 +39,9 @@ public class Usuario {
     public String getContrasena() { return contrasena; }
     public void setContrasena(String contrasena) { this.contrasena = contrasena; }
 
-    public byte[] getFoto() { return foto; }
-    public void setFoto(byte[] foto) { this.foto = foto; }
+    public String getTelefono() { return telefono; }
+    public void setTelefono(String telefono) { this.telefono = telefono; }
+
+    public String getAreaInteres() { return areaInteres; }
+    public void setAreaInteres(String areaInteres) { this.areaInteres = areaInteres; }
 }

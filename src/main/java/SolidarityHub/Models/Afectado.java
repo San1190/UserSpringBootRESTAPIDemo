@@ -1,10 +1,10 @@
-package SolidarityHub;
+package SolidarityHub.Models;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "usuarios")
-public class Usuario {
+@Table(name = "afectados")
+public class Afectado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,20 +13,17 @@ public class Usuario {
     private String nombre;
     private String email;
     private String contrasena;
+    private String direccion; // Añade un campo dirección
 
-    @Lob  // Esto indica que el campo será un tipo "Large Object" para almacenar la imagen como un arreglo de bytes
-    private byte[] foto;  // El campo foto será un arreglo de bytes
+    public Afectado() {}
 
-    public Usuario() {}
-
-    public Usuario(String nombre, String email, String contrasena, byte[] foto) {
+    public Afectado(String nombre, String email, String contrasena, String direccion) {
         this.nombre = nombre;
         this.email = email;
         this.contrasena = contrasena;
-        this.foto = foto;
+        this.direccion = direccion;
     }
 
-    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -39,6 +36,6 @@ public class Usuario {
     public String getContrasena() { return contrasena; }
     public void setContrasena(String contrasena) { this.contrasena = contrasena; }
 
-    public byte[] getFoto() { return foto; }
-    public void setFoto(byte[] foto) { this.foto = foto; }
+    public String getDireccion() { return direccion; }
+    public void setDireccion(String direccion) { this.direccion = direccion; }
 }

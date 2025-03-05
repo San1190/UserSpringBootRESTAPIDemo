@@ -16,13 +16,13 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         // Verificar si el usuario ya existe antes de guardarlo
         if (usuarioRepositorio.findByEmail("juan.perez@email.com") == null) {
-            usuarioRepositorio.save(new Usuario("Juan Pérez", "juan.perez@email.com", "contraseña123"));
+            usuarioRepositorio.save(new Usuario("Juan Pérez", "juan.perez@email.com", "contraseña123", null));
         }
         if (usuarioRepositorio.findByEmail("ana.gomez@email.com") == null) {
-            usuarioRepositorio.save(new Usuario("Ana Gómez", "ana.gomez@email.com", "contraseña456"));
+            usuarioRepositorio.save(new Usuario("Ana Gómez", "ana.gomez@email.com", "contraseña456", null));
         }
         if (usuarioRepositorio.findByEmail("carlos.lopez@email.com") == null) {
-            usuarioRepositorio.save(new Usuario("Carlos López", "carlos.lopez@email.com", "contraseña789"));
+            usuarioRepositorio.save(new Usuario("Carlos López", "carlos.lopez@email.com", "contraseña789", null));
         }
     }
 }
