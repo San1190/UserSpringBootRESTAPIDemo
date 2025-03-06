@@ -1,11 +1,25 @@
-package SolidarityHub;
+// Usuario.java
+package SolidarityHub.models;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonGetter;
 
 @Entity
-@Table(name = "usuarios")
-public class Usuario {
-
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING)
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.EXISTING_PROPERTY,
+    property = "tipo_usuario",
+    visible = true
+)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Afectado.class, name = "afectado"),
+    @JsonSubTypes.Type(value = Voluntario.class, name = "voluntario")
+})
+public abstract class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,8 +28,8 @@ public class Usuario {
     private String email;
     private String contrasena;
 
-    @Lob  // Esto indica que el campo será un tipo "Large Object" para almacenar la imagen como un arreglo de bytes
-    private byte[] foto;  // El campo foto será un arreglo de bytes
+    @Lob
+    protected byte[] foto;
 
     public Usuario() {}
 
@@ -25,6 +39,9 @@ public class Usuario {
         this.contrasena = contrasena;
         this.foto = foto;
     }
+    @JsonGetter("tipo_usuario")  // <- Añadir este getter abstracto
+    public abstract String getTipo_usuario();
+    public abstract String getTipo(); // Método abstracto para definir el tipo
 
     // Getters y Setters
     public Long getId() { return id; }
