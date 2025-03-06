@@ -4,6 +4,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -15,6 +16,8 @@ import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.router.RouterLink;
 
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.MediaType;
@@ -33,7 +36,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
-@Route("")
+@Route("main")
 public class MainView extends VerticalLayout {
 
     private final Grid<Usuario> grid = new Grid<>(Usuario.class);
@@ -46,7 +49,8 @@ public class MainView extends VerticalLayout {
         Button cargarUsuarios = new Button("Cargar Usuarios", e -> cargarDatos());
         Button registrarUsuario = new Button("Registrar Usuario", e -> abrirFormularioRegistro());
 
-        add(new HorizontalLayout(cargarUsuarios, registrarUsuario), grid);
+        HorizontalLayout botonesLayout = new HorizontalLayout(cargarUsuarios, registrarUsuario, new RouterLink("Login", LoginView.class), new RouterLink("Register", RegistrationView.class));
+        add(botonesLayout, grid);
 
         cargarDatos(); // Cargar usuarios al iniciar
     }
@@ -54,13 +58,13 @@ public class MainView extends VerticalLayout {
     private void configurarGrid() {
         grid.setSizeFull();
         grid.removeAllColumns();  // **Añadir esta línea para eliminar las columnas predeterminadas**
-    
+
         // Define las columnas que quieres mostrar y el orden
         grid.addColumn(Usuario::getId).setHeader("ID").setSortable(true);
         grid.addColumn(Usuario::getNombre).setHeader("Nombre").setSortable(true);
         grid.addColumn(Usuario::getEmail).setHeader("Email").setSortable(true);
         grid.addColumn(usuario -> usuario.getTipo()).setHeader("Tipo").setSortable(true);
-    
+
         // Formatear la columna de la foto (si decides mostrarla - requiere convertir byte[] a imagen)
         grid.addComponentColumn(usuario -> {
             if (usuario.getFoto() != null) {
@@ -70,7 +74,7 @@ public class MainView extends VerticalLayout {
                 image.setHeight("50px");
                 return image;
             } else {
-                return new Label("Sin foto");
+                return new Span("Sin foto"); // <- Usar Span en lugar de Label
             }
         }).setHeader("Foto");
     }
@@ -166,7 +170,7 @@ public class MainView extends VerticalLayout {
         dialog.open();
     }
 
-     private void registrarUsuario(Dialog dialog, String tipo, TextField nombreField, EmailField emailField, PasswordField contrasenaField, byte[] fotoBytes) {
+    private void registrarUsuario(Dialog dialog, String tipo, TextField nombreField, EmailField emailField, PasswordField contrasenaField, byte[] fotoBytes) {
         String nombre = nombreField.getValue();
         String email = emailField.getValue();
         String contrasena = contrasenaField.getValue();

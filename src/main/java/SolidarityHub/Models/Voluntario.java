@@ -1,4 +1,3 @@
-// Voluntario.java
 package SolidarityHub.models;
 
 import jakarta.persistence.DiscriminatorValue;
