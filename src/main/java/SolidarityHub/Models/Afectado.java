@@ -14,10 +14,10 @@ public class Afectado extends Usuario {
 
     @Override
     public String getTipo_usuario() {
-        return "afectado"; // Asegúrate de que sea en minúsculas
+        return "afectado"; 
     }
     @Override
     public String getTipo() {
-        return "afectado"; // Asegúrate de que sea en minúsculas
+        return "afectado"; 
     }
 }

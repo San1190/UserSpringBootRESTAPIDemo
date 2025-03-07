@@ -209,6 +209,7 @@ public class MainView extends VerticalLayout {
 
             if (response.getStatusCode().is2xxSuccessful()) {
                 Notification.show("Usuario registrado correctamente");
+                System.out.println(response);
                 cargarDatos();
                 dialog.close();
             } else {

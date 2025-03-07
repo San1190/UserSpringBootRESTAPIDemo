@@ -14,10 +14,10 @@ public class Voluntario extends Usuario {
     }
      @Override
      public String getTipo_usuario() {
-        return "voluntario"; // Asegúrate de que sea en minúsculas
+        return "voluntario"; 
     }
     @Override
     public String getTipo() {
-        return "voluntario"; // Asegúrate de que sea en minúsculas
+        return "voluntario";
     }
 }

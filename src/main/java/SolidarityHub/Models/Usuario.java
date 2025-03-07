@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
     property = "tipo_usuario",
     visible = true
 )
+// Definir los subtipos de Usuario (Afectado y Voluntario)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Afectado.class, name = "afectado"),
     @JsonSubTypes.Type(value = Voluntario.class, name = "voluntario")
@@ -39,7 +40,7 @@ public abstract class Usuario {
         this.contrasena = contrasena;
         this.foto = foto;
     }
-    @JsonGetter("tipo_usuario")  // <- Añadir este getter abstracto
+    @JsonGetter("tipo_usuario") // Getter para el tipo de usuario
     public abstract String getTipo_usuario();
     public abstract String getTipo(); // Método abstracto para definir el tipo
 
