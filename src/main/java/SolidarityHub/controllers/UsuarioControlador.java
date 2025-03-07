@@ -63,4 +63,15 @@ public class UsuarioControlador {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // O podrías devolver un Usuario con un mensaje de error
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> borrarUsuario(@PathVariable Long id) {
+        try {
+            usuarioService.borrarUsuario(id);
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 Internal Server Error
+        }
+    }
 }

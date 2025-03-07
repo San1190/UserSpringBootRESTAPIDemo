@@ -45,8 +45,15 @@ public class MainView extends VerticalLayout {
 
         Button cargarUsuarios = new Button("Cargar Usuarios", e -> cargarDatos());
         Button registrarUsuario = new Button("Registrar Usuario", e -> abrirFormularioRegistro());
-
-        add(new HorizontalLayout(cargarUsuarios, registrarUsuario), grid);
+        Button borrarUsuario = new Button("Borrar Usuario", e -> {
+            Usuario usuario = grid.asSingleSelect().getValue();
+            if (usuario != null) {
+                borrarUsuario(usuario.getId());
+            } else {
+                Notification.show("Por favor, seleccione un usuario", 3000, Notification.Position.MIDDLE);
+            }
+        });
+        add(new HorizontalLayout(cargarUsuarios, registrarUsuario, borrarUsuario), grid);
 
         cargarDatos(); // Cargar usuarios al iniciar
     }
@@ -209,7 +216,7 @@ public class MainView extends VerticalLayout {
 
             if (response.getStatusCode().is2xxSuccessful()) {
                 Notification.show("Usuario registrado correctamente");
-                System.out.println(response);
+                //System.out.println(response);
                 cargarDatos();
                 dialog.close();
             } else {
@@ -218,6 +225,16 @@ public class MainView extends VerticalLayout {
 
         } catch (Exception e) {
             Notification.show("Error al registrar usuario: " + e.getMessage(), 3000, Notification.Position.MIDDLE);
+        }
+    }
+    private void borrarUsuario(Long id) {
+        try {
+            String url = "http://localhost:8081/api/usuarios/" + id;
+            restTemplate.delete(url);
+            Notification.show("Usuario borrado correctamente", 3000, Notification.Position.MIDDLE);
+            cargarDatos();
+        } catch (Exception e) {
+            Notification.show("Error al borrar el usuario: " + e.getMessage(), 3000, Notification.Position.MIDDLE);
         }
     }
 }

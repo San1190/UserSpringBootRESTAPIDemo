@@ -25,4 +25,7 @@ public class UsuarioService {
         Usuario nuevoUsuario = UsuarioFactory.crearUsuario(tipo, nombre, email, contrasena, foto);
         return usuarioRepositorio.save(nuevoUsuario);
     }
+    public void borrarUsuario(Long id) {
+        usuarioRepositorio.deleteById(id);
+    }
 }
